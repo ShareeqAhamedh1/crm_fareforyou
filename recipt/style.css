@@ -1,0 +1,111 @@
+:root {
+    --theme-color: #02367b;
+    --light-bg: #f9f9f9;
+    --accent-color: #e0e0e0; /* Light gray for accents */
+    --border-color: #ddd; /* Subtle border color */
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: #f4f4f4;
+    margin: 0; /* Remove default body margins */
+}
+
+.receipt-container {
+    width: 700px;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border-color); /* Add a bottom border */
+    padding-bottom: 20px;
+}
+
+.logo {
+    height: 120px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.4em;
+    color: var(--theme-color);
+    margin: 0 0 10px 0; /* Adjusted margin */
+}
+
+h2 {
+    font-size: 1.6em;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    color: var(--theme-color);
+}
+
+h2 i {
+    margin-right: 10px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.info-grid div { /* Style individual divs in the grid */
+    text-align: left; /* Align text to the left */
+}
+
+.info-grid p {
+    margin: 5px 0; /* Adjusted margin for better spacing */
+}
+
+.info-grid p:first-child { /* Style for labels (first paragraph) */
+    font-weight: bold;
+}
+
+.payment-details {
+    margin-top: 30px; /* Added spacing between sections */
+}
+
+.payment-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--accent-color);
+    border-radius: 8px;
+}
+
+.payment-summary .label {
+    font-weight: bold;
+}
+
+.payment-summary .amount {
+    font-size: 1.6em;
+    color: var(--theme-color);
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px; /* Increased spacing */
+    border-top: 1px solid var(--border-color); /* Add a top border */
+    padding-top: 20px;
+}
+
+.company-info i {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Subtle hover effect for sections */
+section:hover {
+    background-color: #fff;
+}

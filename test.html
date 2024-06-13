@@ -1,0 +1,58 @@
+<form action="https://secure-test.worldpay.com/wcc/purchase" method=POST> <!-- Specifies the URL for our test environment -->
+  <input type="hidden" name="testMode" value="100"> <!-- 100 instructs our test system -->
+  <input type="hidden" name="instId" value="The installation ID "> <!-- A mandatory parameter -->
+  <input type="hidden" name="cartId" value="The ID for the product "> <!-- A mandatory parameter - reference for the item purchased -->
+  <input type="hidden" name="amount" value="The cost of the product "> <!-- A mandatory parameter -->
+  <input type="hidden" name="currency" value="currency code e.g. GBP, USD "> <!-- A mandatory parameter. ISO currency code -->
+<!-- The below parameters are all optional in this submission, but some become mandatory on the payment page -->
+  <input type="hidden" name="address1" value="1st line of address">
+  <input type="hidden" name="address2" value="2nd line of address">
+  <input type="hidden" name="address3" value="3rd line of address">
+  <input type="hidden" name="town" value="Town">
+  <input type="hidden" name="region" value="Region/County/State">
+  <input type="hidden" name="postcode" value="Post/Zip Code">
+  <input type="hidden" name="country" value="Country">
+  <input type="hidden" name="desc" value="Description of purchase">
+  <input type="hidden" name="resultfile" value="Final landing Page for shopper">
+  <input type="hidden" name="accId1" value="Tells us which merchant code to use (if more than one)">
+  <input type="hidden" name="authMode" value="Specifies an authorisation mode e.g. Pre-authorisation">
+  <input type="hidden" name="authValidFrom" value="Time window for purchase to complete (from)">
+  <input type="hidden" name="authValidTo" value="Time window for purchase to complete (to)">
+  <input type="hidden" name="name" value="Shopper's full name"> <!-- Accepts test values to simulate transaction outcome-->
+  <input type="hidden" name="tel" value="Shopper's telephone number">
+  <input type="hidden" name="fax" value="Shopper's fax number">
+  <input type="hidden" name="email" value="Shopper's email address">
+<!-- The below optional parameters control the behaviour of the payment pages -->
+  <input type="hidden" name="fixContact" value="Prevents contact details from being edited">
+  <input type="hidden" name="hideContact" value="Hides contact details">
+  <input type="hidden" name="hideCurrency" value="Hides the currency drop down">
+  <input type="hidden" name="lang" value="Shopper's language choice">
+  <input type="hidden" name="noLanguageMenu" value="Hides the language menu">
+  <input type="hidden" name="withDelivery" value="Displays and mandates delivery address fields">
+<!-- This optional parameter is for testing, only relevant if you're creating your own messages files -->
+  <input type="hidden" name="subst" value="Lets you see the names of message properties">
+<!-- The below optional parameters can be used in the payment pages -->
+  <input type="hidden" name="amountString" value="HTML string produced from the amount and currency submitted">
+  <input type="hidden" name="countryString" value="Full name of the country produced from the country code">
+  <input type="hidden" name="compName" value="Name of the company">
+<!-- The below optional parameters instruct us to return data in the transaction result -->
+  <input type="hidden" name="transId" value="Worldpay's ID for the transaction">
+  <input type="hidden" name="futurePayId" value="Worldpay's ID for a FuturePay (recurring) agreement, if applicable">
+  <input type="hidden" name="transStatus" value="Result of this transaction">
+  <input type="hidden" name="transTime" value="Time of this transaction">
+  <input type="hidden" name="authAmount" value="Amount the transaction was authorised for">
+  <input type="hidden" name="authCurrency" value="The currency used for authorisation">
+  <input type="hidden" name="authAmountString" value="HTML string produced from auth amount and currency">
+  <input type="hidden" name="rawAuthMessage" value="Text received from bank">
+  <input type="hidden" name="rawAuthCode" value="Single character authorisation code">
+  <input type="hidden" name="callbackPW" value="Payment Responses password, if set">
+  <input type="hidden" name="cardType" value="Type of card used by the shopper">
+  <input type="hidden" name="countryMatch" value="Result of comparison between shopper's country and card issuer country">
+  <input type="hidden" name="AVS" value="Address Verification Service result">
+<!-- The below optional parameters are prefixes for types of custom parameter -->
+  <input type="hidden" name="C_" value="Prefix for parameters only used in the result page">
+  <input type="hidden" name="M_" value="Prefix for parameters only used in the payment responses">
+  <input type="hidden" name="MC_" value="Prefix for parameters used in the both the result page and payment responses">
+  <input type="hidden" name="CM_" value="Prefix for parameters used in the both the result page and payment responses">
+  <input type=submit value=" Buy This "> <!-- Creates the button. When clicked, the form submits the purchase details to us. -->
+</form>

@@ -1,0 +1,13 @@
+[21-May-2024 10:09:46 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/posfkpop/fareforyou.co.uk/crm/backend/website/conn.php on line 32
+[21-May-2024 10:09:46 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/posfkpop/fareforyou.co.uk/crm/backend/website/conn.php on line 34
+[21-May-2024 10:09:46 UTC] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice.php on line 33
+[21-May-2024 10:09:46 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice.php on line 35
+[21-May-2024 12:18:40 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 34
+[21-May-2024 12:18:46 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 34
+[21-May-2024 12:20:55 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 34
+[21-May-2024 12:21:28 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 34
+[21-May-2024 12:22:19 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 34
+[21-May-2024 12:22:55 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 38
+[21-May-2024 12:24:15 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 38
+[21-May-2024 12:24:35 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 38
+[21-May-2024 12:25:10 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 38
