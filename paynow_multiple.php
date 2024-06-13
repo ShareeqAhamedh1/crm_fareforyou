@@ -209,6 +209,15 @@
                });
             }
 
+            function pairPaymnet(cp_id,cid){
+              var cp_id=cp_id;
+              var cid=cid;
+              
+              $('#payment_table').load('crm_ajax_payment/pair_invoice.php',{cp_id:cp_id});
+            
+
+            }
+
             function pairInvoice(cid){
 
               if ($("input[name='bid[]']:checked").length === 0) {

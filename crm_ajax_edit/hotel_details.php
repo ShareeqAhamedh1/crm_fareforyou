@@ -34,6 +34,10 @@
        <input type="text" class="form-control" id="ed_c_hotel_name" name="c_hotel_name" value="<?= $rowPass['h_name'] ?>" placeholder="Hotel Name" required>
     </div>
     <div class="form-group">
+       <label>Hotel Address</label>
+       <input type="text" class="form-control" id="ed_c_hotel_address" name="ed_c_hotel_address" value="<?= $rowPass['hotel_address'] ?>" placeholder="Hotel Address" required>
+    </div>
+    <div class="form-group">
        <label>Check In Date</label>
        <input type="datetime-local" class="form-control" id="ed_check_in_date" name="check_in_date" value="<?= $rowPass['check_in_date'] ?>" required>
     </div>
@@ -41,7 +45,10 @@
        <label>Check Out Date</label>
        <input type="datetime-local" class="form-control" id="ed_check_out_date" name="check_out_date" value="<?= $rowPass['check_out_date'] ?>" required>
     </div>
-    <div class="form-group">
+    
+  </div>
+  <div class="col-lg-6">
+  <div class="form-group">
        <label>Room Type</label>
        <input type="text" class="form-control" id="ed_c_room_type" name="c_room_type" placeholder="Room Type" value="<?= $rowPass['room_type'] ?>" required>
     </div>
@@ -57,8 +64,6 @@
          <option value="7">Ultra All-Inclusive</option>
        </select>
     </div>
-  </div>
-  <div class="col-lg-6">
     <div class="form-group">
        <label>Buy Amount </label>
        <input type="text" class="form-control" id="ed_b_ammount" name="b_ammount" value="<?= $rowPass['buy_amount'] ?>" required>

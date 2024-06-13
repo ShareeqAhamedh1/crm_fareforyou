@@ -8,6 +8,7 @@ $b_id=$_SESSION['b_id'];?>
                                                 <tr class="info">
                                                    <th>Vendors</th>
                                                    <th>Hotel Name</th>
+                                                   <th>Hotel Address</th>
                                                    <th>Check In Date</th>
                                                    <th>Check Out Date</th>
                                                    <th>Room Type</th>
@@ -61,6 +62,7 @@ $b_id=$_SESSION['b_id'];?>
                                                 <tr>
                                                    <td><?= $rowVendor['v_name'] ?></td>
                                                    <td><?= $rowHotel['h_name'] ?> </td>
+                                                   <td><?= $rowHotel['hotel_address'] ?> </td>
                                                    <td><?= $rowHotel['check_in_date'] ?></td>
                                                    <td><?= $rowHotel['check_out_date'] ?></td>
                                                    <td><?= $rowHotel['room_type'] ?></td>

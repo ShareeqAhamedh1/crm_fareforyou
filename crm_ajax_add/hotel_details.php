@@ -24,6 +24,10 @@ $b_id = $_SESSION['b_id'];
        <input type="text" class="form-control" id="c_hotel_name" name="c_hotel_name" placeholder="Hotel Name" required>
     </div>
     <div class="form-group">
+       <label>Hotel Address</label>
+       <input type="text" class="form-control" id="c_hotel_address" name="c_hotel_address" placeholder="Hotel Address" required>
+    </div>
+    <div class="form-group">
        <label>Check In Date</label>
        <input type="datetime-local" class="form-control" id="check_in_date" name="check_in_date" required>
     </div>
@@ -31,7 +35,10 @@ $b_id = $_SESSION['b_id'];
        <label>Check Out Date</label>
        <input type="datetime-local" class="form-control" id="check_out_date" name="check_out_date" required>
     </div>
-    <div class="form-group">
+ 
+  </div>
+  <div class="col-lg-6">
+  <div class="form-group">
        <label>Room Type</label>
        <input type="text" class="form-control" id="c_room_type" name="c_room_type" placeholder="Room Type" required>
     </div>
@@ -47,8 +54,6 @@ $b_id = $_SESSION['b_id'];
          <option value="7">Ultra All-Inclusive</option>
        </select>
     </div>
-  </div>
-  <div class="col-lg-6">
     <div class="form-group">
        <label>Buy Amount </label>
        <input type="text" class="form-control" id="b_ammount" name="b_ammount" required>

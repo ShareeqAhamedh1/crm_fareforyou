@@ -32,10 +32,12 @@ $cid = $conn->real_escape_string(trim($_REQUEST['c_id']));
           $countStat =$rsStatus->num_rows;
           if($countStat > 0){
             $statRec = "Paired";
+            $stat=0;
             $styleRec ="color:#09bd84;font-weight:bold;";
           }
           else{
             $statRec = "Not Paired";
+            $stat=1;
             $styleRec ="color:grey;font-weight:bold;";
           }
      ?>
@@ -47,6 +49,15 @@ $cid = $conn->real_escape_string(trim($_REQUEST['c_id']));
        <td><?= $paytype ?></td>
        <td style="<?= $styleRec ?>"> <?= $statRec ?> </td>
        <td> <a href="recipt/paidinvoice.php?id=<?= $rowCus['cp_id'] ?>" target="_blank" class="btn btn-warning btn-sm">Download Payment Recipt</a> </td>
+         <td>
+         <?php if ($stat==1) {
+            
+            ?>
+            <a href="#" onclick="pairPaymnet(<?= $rowCus['cp_id'] ?>,<?= $cid ?>)"  class="btn btn-info btn-sm">Pair Payment</a>
+            <?php
+          } ?>
+         </td>
+     
      </tr>
    <?php
         }

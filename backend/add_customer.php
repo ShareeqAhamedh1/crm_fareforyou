@@ -12,7 +12,7 @@
  $c_id = $_REQUEST['customer_id'];
  $pay_term = $_REQUEST['p_term'];
 
-  $sqlBookingInfo="INSERT INTO tbl_booking (tour_id,c_id,booked_date_time,u_id,p_sta,l_p_id,pay_term) VALUES ('$t_pack','$c_id','$b_date','$us_id',2,'$leads','$pay_term')";
+  $sqlBookingInfo="INSERT INTO tbl_booking (tour_id,c_id,booked_date_time,u_id,p_sta,l_p_id,pay_term,b_status) VALUES ('$t_pack','$c_id','$b_date','$us_id',2,'$leads','$pay_term',1)";
   $rsBookingInfo=$conn->query($sqlBookingInfo);
 
  $b_id = $conn->insert_id;

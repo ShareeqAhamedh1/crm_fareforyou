@@ -3,6 +3,8 @@
          $('#info_load_data').load('crm_ajax_add/view_flights.php');
          $('#flight_pnr').load('crm_ajax_add/show_pnr.php');
 
+         
+       
          function convert_pnr(){
            var pnr_text = document.getElementById('pnr_code').value;
            $('#flight_pnr').load('crm_ajax_add/pnr_results.php',{
@@ -304,6 +306,7 @@
           var h_id =document.getElementById('hid').value;
               var vendor_name = document.getElementById('ed_vendor_name').value;
                var c_hotel_name = document.getElementById('ed_c_hotel_name').value;
+               var c_hotel_address = document.getElementById('ed_c_hotel_address').value;
                var check_in_date = document.getElementById('ed_check_in_date').value;
                var check_out_date = document.getElementById('ed_check_out_date').value;
                var c_room_type = document.getElementById('ed_c_room_type').value;
@@ -318,6 +321,7 @@
                  data:{
                     e_vendor_name:vendor_name,
                     e_c_hotel_name:c_hotel_name,
+                    e_c_hotel_address:c_hotel_address,
                     e_check_in_date:check_in_date,
                     e_check_out_date:check_out_date,
                     e_c_room_type:c_room_type,
@@ -332,6 +336,7 @@
                      if(resp == 200){
                        document.getElementById('vendor_name').value="";
                        document.getElementById('c_hotel_name').value="";
+                       document.getElementById('c_hotel_address').value="";
                        document.getElementById('check_in_date').value="";
                        document.getElementById('check_out_date').value="";
                        document.getElementById('c_room_type').value="";
@@ -400,6 +405,7 @@
          function addHotel(){
               var vendor_name = document.getElementById('vendor_name').value;
                var c_hotel_name = document.getElementById('c_hotel_name').value;
+               var c_hotel_address = document.getElementById('c_hotel_address').value;
                var check_in_date = document.getElementById('check_in_date').value;
                var check_out_date = document.getElementById('check_out_date').value;
                var c_room_type = document.getElementById('c_room_type').value;
@@ -414,6 +420,7 @@
                  data:{
                     e_vendor_name:vendor_name,
                     e_c_hotel_name:c_hotel_name,
+                    e_c_hotel_address:c_hotel_address,
                     e_check_in_date:check_in_date,
                     e_check_out_date:check_out_date,
                     e_c_room_type:c_room_type,
@@ -426,6 +433,7 @@
                      if(resp == 200){
                        document.getElementById('vendor_name').value="";
                        document.getElementById('c_hotel_name').value="";
+                       document.getElementById('c_hotel_address').value="";
                        document.getElementById('check_in_date').value="";
                        document.getElementById('check_out_date').value="";
                        document.getElementById('c_room_type').value="";
@@ -454,6 +462,15 @@
              var arrive_time = document.getElementById('arrive_time').value;
              var duration = document.getElementById('duration').value;
              var airline_code = document.getElementById('airline_code').value;
+
+             if (!flight_no || !depart_from ||!depar_date || !arrive_to ||!arrive_time || !duration || !airline_code) {
+              swal({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Please fill in all the required fields!',
+              });
+              return;
+          }
 
              $.ajax({
                url:'backend/add_itenery.php',
@@ -672,6 +689,53 @@
              });
            }
          }
+
+         function save(s_status,b_id){
+          var b_status=s_status;
+          var b_id=b_id;
+          $.ajax({
+            url:'backend/change_status.php',
+            method:'POST',
+            data:{
+              c_b_status:b_status,
+              c_b_id:b_id
+            },
+            success:function(resp){
+              if(resp == 200){
+             
+                $('#info_load_data').load('crm_ajax_add/view_flights.php');
+                $('#info_load').load('crm_ajax_add/flights.php');
+                $('#flight_pnr').load('crm_ajax_add/show_pnr.php');
+                swal("Saved", "Passenger saved", "success");
+               }
+            }
+          });
+
+       }
+
+       function draft(s_status,b_id){
+        var b_status=s_status;
+        var b_id=b_id;
+        $.ajax({
+          url:'backend/change_status.php',
+          method:'POST',
+          data:{
+            c_b_status:b_status,
+            c_b_id:b_id
+          },
+          success:function(resp){
+            if(resp == 200){
+           
+              $('#info_load_data').load('crm_ajax_add/view_flights.php');
+              $('#info_load').load('crm_ajax_add/flights.php');
+              $('#flight_pnr').load('crm_ajax_add/show_pnr.php');
+              swal("Saved", "Passenger saved", "success");
+             }
+          }
+        });
+
+     }
+        
 
            function flights() {
             $('#info_load').load('crm_ajax_add/flights.php');

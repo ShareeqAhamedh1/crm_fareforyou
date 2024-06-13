@@ -57,8 +57,8 @@
   <label for="">Payment Term</label>
   <select class="form-control" name="p_term" required>
     <option value="">Select Payment Term</option>
-    <option value="0">Payment Plan</option>
-    <option value="1">Fully Paid</option>
+    <option value="0">Installment</option>
+    <option value="1">One time Payment</option>
   </select>
 </div>
 

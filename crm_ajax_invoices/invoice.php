@@ -79,6 +79,12 @@ $uid = $_SESSION['u_id'];
                                                    $pay_term= getDataBack($conn,'tbl_booking','b_id',$bid,'pay_term');
                                                    $invoice_status_code= getDataBack($conn,'tbl_booking','b_id',$bid,'status');
                                                    $customerName= getDataBack($conn,'tbl_customer_info','c_id',$cid,'c_f_name');
+                                                  
+                                                   $sqlBstatus="SELECT * FROM tbl_booking WHERE b_id='$bid'";
+                                                   $rsBstatus=$conn->query($sqlBstatus);
+
+                                                   $rowBstatus = $rsBstatus->fetch_assoc();
+                                                   $b_status=$rowBstatus['b_status'];
 
                                                    if($pay_term ==0){
                                                      $invtext = "P-INV";
@@ -90,6 +96,7 @@ $uid = $_SESSION['u_id'];
                                                    }
 
                                                    if($invoice_status_code == 0){
+                                                    // && $b_status==0
                                                    ?>
 
        <tr>
@@ -113,10 +120,10 @@ $uid = $_SESSION['u_id'];
                    <?php } ?>
                     </td>
        </tr>
-     <?php } ?>
+     <?php }  } ?>
        <?php
    }
-}
+
 ?>
 
                                           </tbody>

@@ -8,6 +8,7 @@ $h_id= $_REQUEST['hid'];
 
 $v_id=$_REQUEST['e_vendor_name'];
 $c_hotel_name=$_REQUEST['e_c_hotel_name'];
+$c_hotel_address=$_REQUEST['e_c_hotel_address'];
 $check_in_date=$_REQUEST['e_check_in_date'];
 $check_out_date=$_REQUEST['e_check_out_date'];
 $c_room_type=$_REQUEST['e_c_room_type'];
@@ -21,6 +22,7 @@ $b_id=$_SESSION['b_id'];
 $sqlHotel="UPDATE tbl_hote_det SET 
                     v_id='$v_id',
                      h_name='$c_hotel_name',
+                     hotel_address='$c_hotel_address',
                      check_in_date='$check_in_date',
                      check_out_date='$check_out_date',
                      room_type='$c_room_type',

@@ -42,8 +42,8 @@
                                        <label for="">Payment Plan</label>
                                          <select id="payment_plan" class="form-control">
                                              <option value="">All Payment Plans</option>
-                                             <option value="1">One Time</option>
-                                             <option value="0">Payment Plan</option>
+                                             <option value="1">One time Payment</option>
+                                             <option value="0">Installment</option>
                                          </select>
                                      </div>
                                      <div class="col-lg-2">
