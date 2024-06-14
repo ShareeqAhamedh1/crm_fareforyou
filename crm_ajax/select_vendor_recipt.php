@@ -2,7 +2,7 @@
 include '../backend/website/conn.php';
 $skey = $conn->real_escape_string(trim($_REQUEST['s_key']));
 ?>
-<h4>Customers List</h4>
+<h4>Supplier List</h4>
 <hr>
 <div class="row">
   <div class="col-4">
@@ -35,7 +35,7 @@ $skey = $conn->real_escape_string(trim($_REQUEST['s_key']));
          <td>
            <button type="button"
            onclick="issueReciptVendors(<?= $row['v_id'] ?>)"
-           class="btn btn-warning btn-sm"> Issue Recipt </button>
+           class="btn btn-warning btn-sm"> Pay Now </button>
          </td>
        </tr>
      <?php } } ?>

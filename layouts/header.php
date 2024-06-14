@@ -306,7 +306,8 @@
                         <li><a href="paynow_multiple.php">Quick Recipt</a></li>
                         <li><a href="view_recipts.php">View Recipts</a></li>
                         <li><a href="payment_method.php">Payment Method</a></li>
-                        <li><a href="payments_to_vendor.php">Payment To Vendor</a></li>
+                        <li><a href="payments_to_vendor.php">Quick Payments</a></li>
+                        <li><a href="view_payments.php">View Payments</a></li>
                      </ul>
                   </li>
 
