@@ -1,8 +1,8 @@
 <?php
  include './backend/website/conn.php';
 
-$fromDate ="2024-05-02";
-$toDate="2024-05-25";
+$fromDate ="2024-05-06";
+$toDate="2024-06-25";
 
 
 $opening_ballance=0;
@@ -45,8 +45,6 @@ $closing_ballance=0;
       $total_cred = $rowCredit['tot_paid'];
     }
 
-        echo "$id | Opening Dept:$total_debt <hr>";
-        echo "$id | Opening Credit:$total_cred <hr>";
 
     $drOrCr = "";
 
@@ -80,78 +78,86 @@ $closing_ballance=0;
 
     for ($date = $startDate; $date < $endDate; $date->modify('+1 day')) {
         $currentDate = $date->format('Y-m-d');
-        $sqlBookingsSelected = "SELECT * FROM tbl_booking WHERE booked_date_time = '$currentDate' AND c_id='$id'";
 
-      $rsBookingsSelected = $conn->query($sqlBookingsSelected);
-      if($rsBookingsSelected->num_rows > 0){
+        $sqlBookingsSelected = "SELECT * FROM tbl_booking WHERE booked_date_time = '$currentDate' AND c_id='$id'";
+        $rsBookingsSelected = $conn->query($sqlBookingsSelected);
+
+        $sqlCreditSelected = "SELECT * FROM tbl_customer_pay WHERE pi_date='$currentDate' AND c_id='$id'";
+        $rsCreditSelected = $conn->query($sqlCreditSelected);
+
+      if($rsBookingsSelected->num_rows > 0 || $V->num_rows>0 ){
         while($rowBSelected = $rsBookingsSelected->fetch_assoc()){
           $bid= $rowBSelected['b_id'];
-          $flightValSelected += getSumValue($conn,'sell_amount','tbl_passenger_flight_bookings','b_id',$bid);
-          $hotelValSelected +=getSumValue($conn,'sell_amount','tbl_hote_det','b_id',$bid);;
-          $transferValSelected +=getSumValue($conn,'sell_amount','tbl_transfer','b_id',$bid);
-          $otherValSelected +=getSumValue($conn,'sell_price','tbl_other_charges','b_id',$bid);
+          $flightValSelected = getSumValue($conn,'sell_amount','tbl_passenger_flight_bookings','b_id',$bid);
+          $hotelValSelected =getSumValue($conn,'sell_amount','tbl_hote_det','b_id',$bid);;
+          $transferValSelected =getSumValue($conn,'sell_amount','tbl_transfer','b_id',$bid);
+          $otherValSelected =getSumValue($conn,'sell_price','tbl_other_charges','b_id',$bid);
+          $drOrCrSel="DR";
+          $drOrCr=$drOrCrSel;
 
+          if($rsCreditSelected->num_rows >0){
+            $rowBCredit = $rsCreditSelected->fetch_assoc();
+            $selected_total_cred = $rowBCredit['tot_paid'];
+            echo "<hr>Total paid $selected_total_cred <hr>";
+            $drOrCrCred="CR";
+            $drOrCr=$drOrCrCred;
+          }
+
+          // $selected_total_cred = $rowBCredit['tot_paid'];
+
+          
           $selected_total_debt = $flightValSelected + $hotelValSelected + $transferValSelected + $otherValSelected;
 
-      ?>
+          // $opening_ballance ="1000"; CR
 
+        
 
-      <?php
+          if ($drOrCr=="DR") {
+            $amount=$opening_ballance + $selected_total_debt;
+           $closing_ballance += $amount;
+          }else {
+            $amount=$opening_ballance + $selected_total_cred;
+            $closing_ballance -= $amount;
+          }
+
+          ?>
+          <tr>
+            <td> <?= $currentDate ?> </td>
+            <td> | <?= $bid ?> (description) </td>
+            <?php 
+              if ($selected_total_cred==0) {
+                ?> 
+                 <td> |<?= $selected_total_debt,$drOrCr ?>  </td><!-- DR --> 
+                 <td> |</td><!-- CR -->
+                <?php
+                
+              }else if ($selected_total_debt==0) {
+                ?> 
+                 <td> |</td><!-- DR -->
+                 <td> |<?= $selected_total_cred,$drOrCr ?>  </td><!-- DR --> 
+                <?php
+
+              }
+            ?>
+           
+          
+            <td> |<?= $closing_ballance,$drOrCr ?></td><!-- Closing Balance -->
+          </tr>
+          <hr>
+          <?php
 
         }
       }
-
-      $sqlCreditSelected = "SELECT * FROM tbl_customer_pay WHERE pi_date = '$currentDate' AND c_id='$id'";
-       $rsCreditSelected = $conn->query($sqlCreditSelected);
-
-      if($rsCreditSelected->num_rows >0){
-        while($rowCreditSelected = $rsCreditSelected->fetch_assoc()){
-            $selected_total_cred = 1000;
-            $drOrCrSel = "";
-            $amount=0;
-
-
-            if($selected_total_debt > $selected_total_cred){
-              $drOrCrSel = "DR";
-              $amount=$selected_total_debt-$selected_total_cred;
-
-            }
-            else {
-              $drOrCrSel = "CR";
-              $amount=$selected_total_cred-$selected_total_debt;
-            }
-
-            $drOrCrFinal="";
-            if ($drOrCr==$drOrCrSel) {
-                $closing_ballance=$opening_ballance+$amount;
-                $drOrCrFinal=$drOrCr;
-            }else if($drOrCr="CR" && $drOrCrSel="DR") {
-                if ($opening_ballance>$amount) {
-                    $closing_ballance=$opening_ballance-$amount;
-                    $drOrCrFinal="CR";
-
-                }else{
-                    $closing_ballance=$amount-$opening_ballance;
-                    $drOrCrFinal="DR";
-                }
-
-            }else if($drOrCr="DR" && $drOrCrSel="CR"){
-                if ($opening_ballance>$amount) {
-                    $closing_ballance=$opening_ballance-$amount;
-                    $drOrCrFinal="DR";
-                }else{
-                    $closing_ballance=$amount-$opening_ballance;
-                    $drOrCrFinal="CR";
-                }
-            }
-        }
+      else {
+        // echo "$sqlBookingsSelected";
       }
+
 
 
     }
-
-
     exit();
+
+
 
 
 

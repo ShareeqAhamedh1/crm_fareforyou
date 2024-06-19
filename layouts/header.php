@@ -327,6 +327,7 @@
                                              </a>
                                              <ul class="treeview-menu">
                                                 <li><a href="payment_plan.php">Client Credit summary Report</a></li>
+                                                <li><a href="payment_plan_customer.php">Customer Ledger Report</a></li>
                                              </ul>
                                           </li>
                   <li>
