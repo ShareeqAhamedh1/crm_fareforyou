@@ -8,25 +8,25 @@
   <div class="row">
     <div class="col-lg-2">
         <div class="form-group">
-            <label for="flight_no">Flight No</label>
+            <label for="flight_no">Flight No <span style="color:red;">*</span></label>
             <input type="text" class="form-control" id="flight_no" name="flight_no" placeholder="" required>
         </div>
     </div>
          <div class="col-lg-2">
              <div class="form-group">
-                 <label for="depart_from">Orgin</label>
+                 <label for="depart_from">Orgin <span style="color:red;">*</span></label>
                  <input type="text" class="form-control" id="depart_from" name="depart_from" placeholder="Ex: Lon" required>
              </div>
          </div>
          <div class="col-lg-2">
              <div class="form-group">
-                 <label for="arrive_to">Destination</label>
+                 <label for="arrive_to">Destination <span style="color:red;">*</span></label>
                  <input type="text" class="form-control" id="arrive_to" placeholder="DXB" name="arrive_to" required>
              </div>
          </div>
       <div class="col-lg-2">
           <div class="form-group">
-              <label for="airline_code">Airline</label>
+              <label for="airline_code">Airline <span style="color:red;">*</span></label>
               <select class="form-control" name="airline" id="airline_code">
                   <?php
                   $sqlAirline = "SELECT * FROM tbl_airlines";
@@ -46,13 +46,13 @@
 
       <div class="col-lg-2">
           <div class="form-group">
-              <label for="depar_date">Flight Date</label>
+              <label for="depar_date">Flight Date <span style="color:red;">*</span></label>
               <input type="date" class="form-control" id="depar_date" name="depar_date" required>
           </div>
       </div>
       <div class="col-lg-2">
           <div class="form-group">
-              <label for="arrive_time">Arrival Date</label>
+              <label for="arrive_time">Arrival Date <span style="color:red;">*</span></label>
               <input type="date" class="form-control" id="arrive_time" name="arrive_time" required>
           </div>
       </div>

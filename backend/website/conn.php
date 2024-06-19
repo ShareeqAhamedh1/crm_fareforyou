@@ -8,10 +8,10 @@ $username = "root";
 $password = "";
 $dbname = "db_crm_fareforyou";
 
-$servername_web = "localhost";
-$username_web = "root";
-$password_web = "";
-$dbname_web = "db_fareforyou";
+// $servername_web = "localhost";
+// $username_web = "root";
+// $password_web = "";
+// $dbname_web = "db_fareforyou";
 
 
 // $servername_web = "localhost";
@@ -29,7 +29,7 @@ $current_date_time = date('Y/m/d H:i:s');
 
 $conn = new mysqli($servername,$username,$password,$dbname);
 
-$connWeb = new mysqli($servername_web,$username_web,$password_web,$dbname_web);
+// $connWeb = new mysqli($servername_web,$username_web,$password_web,$dbname_web);
 
 if(isset($_SESSION['u_id'])){
   $u_id = $_SESSION['u_id'];
@@ -43,6 +43,18 @@ function getDataBack($conn,$table,$col_id,$id,$coulmn){
     $row = $rs->fetch_assoc();
 
     return $row[$coulmn];
+  }
+}
+
+
+function getSumValue($conn,$sumVal,$table,$col_id,$id){
+  $sql = "SELECT SUM($sumVal) AS value FROM $table WHERE $col_id = '$id'";
+  $rs = $conn->query($sql);
+
+  if ($rs->num_rows > 0) {
+    $row = $rs->fetch_assoc();
+
+    return $row['value'];
   }
 }
 

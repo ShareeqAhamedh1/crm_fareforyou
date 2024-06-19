@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="error-desc">
-                        <p>Sorry, but the page you are looking for has note been found. Try checking the URL for error, then hit the 
+                        <p>Sorry, but the page you are looking for has note been found. Try checking the URL for error, then hit the
                             refresh button on your browser or try found something else in our app.</p>
                         <form class="navbar-form" role="search">
                             <div class="input-group my-lg-0">

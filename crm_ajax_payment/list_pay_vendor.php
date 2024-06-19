@@ -1,7 +1,9 @@
 <?php
 include '../backend/website/conn.php';
-$vid = $conn->real_escape_string(trim($_REQUEST['v_id']));
+$vid = $conn->real_escape_string(trim($_REQUEST['c_id']));
 ?>
+<button type="button" class="btn btn-secondary btn-sm" onclick="goBackVendor()" name="button"> < Search New Supplier</button>
+<hr>
 <h4>Payment Details Of <?= getDataBack($conn,'tbl_vendor_det','v_id',$vid,'v_name') ?> </h4>
 <hr>
 <table id="dataTableExample1" class="table table-bordered table-striped table-hover">
@@ -12,9 +14,9 @@ $vid = $conn->real_escape_string(trim($_REQUEST['v_id']));
          <th>Description</th>
          <th>Date</th>
          <th>Payment Type</th>
-        
+
          <th>Action</th>
- 
+
       </tr>
    </thead>
    <tbody>
@@ -41,14 +43,14 @@ $vid = $conn->real_escape_string(trim($_REQUEST['v_id']));
           }
      ?>
      <tr>
-       <td>#RCP 001<?= htmlspecialchars($rowCus['vp_id']) ?></td>
+       <td>#SUP 00<?= htmlspecialchars($rowCus['vp_id']) ?></td>
        <td>£ <?= number_format($rowCus['p_amount'], 2, '.', ',') ?></td>
        <td><?= htmlspecialchars($rowCus['pi_description']) ?></td>
        <td><?= htmlspecialchars($rowCus['pi_date']) ?></td>
        <td><?= $paytype ?></td>
-      
-       <td><button type="button" onclick="delSup(<?= $rowCus['vp_id'] ?>)" class="btn btn-danger btn-sm" name="button">Delete</button> </td>
-     
+
+       <td><button type="button" onclick="delSup(<?= $rowCus['vp_id'] ?>,<?= $vid ?>)" class="btn btn-danger btn-sm" name="button">Delete</button> </td>
+
      </tr>
    <?php
         }

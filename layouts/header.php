@@ -326,7 +326,7 @@
                                              </span>
                                              </a>
                                              <ul class="treeview-menu">
-                                                <li><a href="payment_plan.php">Customer Report</a></li>
+                                                <li><a href="payment_plan.php">Client Credit summary Report</a></li>
                                              </ul>
                                           </li>
                   <li>

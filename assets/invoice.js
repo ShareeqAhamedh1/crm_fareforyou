@@ -1,10 +1,12 @@
 
+var bid_h = document.getElementById('bid_home').value;
+
+$('#save_draft_button').load('crm_ajax/invoice_save_draft.php',{ b_id:bid_h });
          $('#info_load').load('crm_ajax_add/flights.php');
          $('#info_load_data').load('crm_ajax_add/view_flights.php');
          $('#flight_pnr').load('crm_ajax_add/show_pnr.php');
 
-         
-       
+
          function convert_pnr(){
            var pnr_text = document.getElementById('pnr_code').value;
            $('#flight_pnr').load('crm_ajax_add/pnr_results.php',{
@@ -702,7 +704,8 @@
             },
             success:function(resp){
               if(resp == 200){
-             
+
+                $('#save_draft_button').load('crm_ajax/invoice_save_draft.php',{ b_id:b_id });
                 $('#info_load_data').load('crm_ajax_add/view_flights.php');
                 $('#info_load').load('crm_ajax_add/flights.php');
                 $('#flight_pnr').load('crm_ajax_add/show_pnr.php');
@@ -725,7 +728,7 @@
           },
           success:function(resp){
             if(resp == 200){
-           
+              $('#save_draft_button').load('crm_ajax/invoice_save_draft.php',{ b_id:b_id });
               $('#info_load_data').load('crm_ajax_add/view_flights.php');
               $('#info_load').load('crm_ajax_add/flights.php');
               $('#flight_pnr').load('crm_ajax_add/show_pnr.php');
@@ -735,7 +738,7 @@
         });
 
      }
-        
+
 
            function flights() {
             $('#info_load').load('crm_ajax_add/flights.php');

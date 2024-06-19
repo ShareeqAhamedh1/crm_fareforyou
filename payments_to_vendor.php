@@ -11,8 +11,8 @@
                   <i class="fa fa-money"></i>
                </div>
                <div class="header-title">
-                  <h1>Payments to vendor</h1>
-                  <small>Payment List</small>
+                  <h1>Quick Payments</h1>
+                  <small>Payments List</small>
                </div>
             </section>
             <!-- Main content -->
@@ -22,7 +22,7 @@
                            <div class="card lobicard"  data-sortable="true">
                                <div class="card-header">
                                    <div class="card-title custom_title">
-                                       <h4>Recipts management</h4>
+                                       <h4>Payments management</h4>
                                    </div>
                                </div> <br>
                                <div class="card-body">
@@ -33,7 +33,7 @@
                                        <label for="">Select Ledger</label>
                                        <select class="form-control" name="" onchange="selectLedger(this.value)">
                                          <option value="">Select Ledger</option>
-                                         <option value="1">Customer Ledger</option>
+                                         <!-- <option value="1">Customer Ledger</option> -->
                                          <option value="2">Supplier Ledger</option>
                                          <option value="3">General Ledger</option>
                                        </select>
@@ -81,13 +81,19 @@
          <!-- /.content-wrapper -->
          <?php include("layouts/footer.php"); ?>
          <script type="text/javascript">
-        
+
             function goBackCustomers(){
                 $('#payment_data').empty();
                 $('#payment_table').empty();
                 $('#loadCustomers').load('crm_ajax/select_customer_recipt.php');
             }
-    
+
+            function goBackVendor(){
+                $('#payment_data').empty();
+                $('#payment_table').empty();
+                $('#loadCustomers').load('crm_ajax/select_vendor_recipt.php');
+            }
+
             function selectLedger(id){
               // alert(id);
               if(id == 1){
@@ -200,8 +206,12 @@
                        document.getElementById('p_amount').value='';
                        document.getElementById('desc').value='';
                        document.getElementById('pmethod_id').value='';
-                      $('#payment_table').load('crm_ajax_payment/list_pay_vendor.php',{v_id:vid });
-                     swal("Payment Success", "success");  }
+                      $('#payment_table').load('crm_ajax_payment/list_pay_vendor.php',{c_id:vid });
+                      swal({
+                          icon: 'success',
+                          title: 'Payment Success'
+                      });
+                   }
                      else {
                        console.log(resp);
                      }
@@ -285,8 +295,8 @@
                });
             }
 
-            function delSup(vp_id){
-            if(confirm('Are you sure you want to remove #RCP 000'+vp_id)){
+            function delSup(vp_id,vid){
+            if(confirm('Are you sure you want to remove #SUP 00'+vp_id)){
                 $.ajax({
                   url:'backend/delSup.php',
                   method:'POST',
@@ -294,7 +304,7 @@
                     vpId:vp_id
                   },success:function(resp){
                     if(resp == 200){
-                     $('#payment_table').load('crm_ajax_payment/list_pay_vendor.php',{v_id:vid });
+                     $('#payment_table').load('crm_ajax_payment/list_pay_vendor.php',{c_id:vid });
                     }
                     else {
                       alert('Something Went Wrong');
@@ -308,9 +318,9 @@
             function pairPaymnet(cp_id,cid){
               var cp_id=cp_id;
               var cid=cid;
-              
+
               $('#payment_table').load('crm_ajax_payment/pair_invoice.php',{cp_id:cp_id});
-            
+
 
             }
 

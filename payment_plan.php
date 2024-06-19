@@ -10,7 +10,7 @@
                   <i class="fa fa-file-text"></i>
                </div>
                <div class="header-title">
-                  <h1>Customer Outstanding Report</h1>
+                  <h1>Client Credit Summary Report</h1>
                   <small>Reports</small>
                </div>
             </section>
@@ -21,15 +21,11 @@
                            <div class="card lobicard"  data-sortable="true">
                                <div class="card-header">
                                    <div class="card-title custom_title">
-                                       <h4>Report List</h4>
+                                       <h4>Client Credit summary Report</h4>
                                    </div>
                                </div>
                               <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-3">
-                                      <label for="">Search Key Invoice</label>
-                                        <input type="text" id="search_key_invoice" class="form-control" placeholder="Search by ID, Name, Ticket..." value="">
-                                    </div>
                                     <div class="col-lg-3">
                                        <label for="">From</label>
                                         <input type="date" id="date_from" class="form-control" placeholder="Date From">
@@ -40,7 +36,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                       <br>
-                                        <button type="button" class="btn btn-primary btn-sm" onclick="searchInvoice()">Search</button>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="searchInvoice()">Preview</button>
                                     </div>
                                 </div>
                               </div>
@@ -109,9 +105,13 @@
             }
 
             function searchInvoice(){
-              var key = document.getElementById('search_key_invoice').value;
+              var cdate_from = document.getElementById('date_from').value;
+              var cdate_to = document.getElementById('date_to').value;
 
-              $('#invoice_load_details').load('crm_ajax_invoices/invoice_setup.php',{ s_key:key });
+              $('#invoice_load_details').load('crm_ajax_invoices/invoice_setup.php',{
+                date_from:cdate_from,
+                date_to:cdate_to
+              });
             }
 
 
