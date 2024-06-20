@@ -27,10 +27,10 @@
                               <div class="card-body">
                                 <div class="row">
                                 <div class="col-lg-3">
-                                       
+
                                        <button type="button" class="btn btn-primary" name="button" onclick="openModelCustomer()">Select Customer</button>
                                        <div class="form-grop">
-                                        
+
                                         <input type="text" name="" id="customer_selected" class="form-control" disabled>
                                     </div>
                                     <input type="hidden" id="customer_id" name="customer_id" value="">
@@ -138,19 +138,21 @@
             function searchInvoiceCustomer(){
               var cdate_from = document.getElementById('date_from').value;
               var cdate_to = document.getElementById('date_to').value;
+              var cid = document.getElementById('customer_id').value;
 
               $('#invoice_load_details').load('crm_ajax_invoices/invoice_setup_customer.php',{
                 date_from:cdate_from,
-                date_to:cdate_to
+                date_to:cdate_to,
+                customer_id:cid
               });
             }
 
             function openModelCustomer(){
            $('#customer1').modal('show');
          }
+
          function searchCustomer(){
             let c_key = document.getElementById('customer_search').value;
-
             $('#load_customers').load('crm_ajax/load_customer.php',{ key:c_key });
           }
 
@@ -161,7 +163,7 @@
           }
 
           $('#info_load').load('crm_ajax/customer_info.php');
-          
-          
+
+
 
          </script>

@@ -1,7 +1,7 @@
 <?php
  include './backend/website/conn.php';
 
-$fromDate ="2024-05-06";
+$fromDate ="2024-06-11";
 $toDate="2024-06-25";
 
 
@@ -21,6 +21,8 @@ $closing_ballance=0;
     $sqlBookings = "SELECT * FROM tbl_booking WHERE booked_date_time < '$fromDate' AND c_id='$id'";
     $rsBookings = $conn->query($sqlBookings);
 
+
+
     if($rsBookings->num_rows > 0){
       while($rowB = $rsBookings->fetch_assoc()){
         $bid= $rowB['b_id'];
@@ -29,12 +31,9 @@ $closing_ballance=0;
         $transferVal +=getSumValue($conn,'sell_amount','tbl_transfer','b_id',$bid);
         $otherVal +=getSumValue($conn,'sell_price','tbl_other_charges','b_id',$bid);
       }
-    } else {
-      echo "No bookings found for c_id: $id<br>";  // Debug line to see if no bookings are found
     }
 
     $total_debt = $flightVal + $hotelVal + $transferVal + $otherVal;
-
 
 
     $sqlCredit = "SELECT SUM(pi_amount) AS tot_paid FROM tbl_customer_pay WHERE pi_date < '$fromDate' AND c_id='$id'";
@@ -59,9 +58,6 @@ $closing_ballance=0;
       $opening_ballance=$total_cred-$total_debt;
     }
 
-    echo "$id | Opening Balance:$opening_ballance |$drOrCr| <hr>";
-
-
 
     $selected_total_debt=0;
     $selected_total_cred=0;
@@ -76,6 +72,24 @@ $closing_ballance=0;
     $endDate = new DateTime($toDate);
     $endDate->modify('+1 day');
 
+    $cbDrOrCr = "";
+
+
+    echo "Opening Balance: $opening_ballance | $drOrCr<hr>";
+
+              if($opening_ballance == 0){
+                $closing_ballance =0;
+              }
+              else if($drOrCr == "DR"){
+                $closing_ballance += $opening_ballance;
+                $cbDrOrCr = "DR";
+              }
+              else {
+                $closing_ballance += $opening_ballance;
+                $cbDrOrCr = "CR";
+              }
+  echo "Closing Balance: $closing_ballance | $cbDrOrCr <hr> ";
+
     for ($date = $startDate; $date < $endDate; $date->modify('+1 day')) {
         $currentDate = $date->format('Y-m-d');
 
@@ -85,107 +99,88 @@ $closing_ballance=0;
         $sqlCreditSelected = "SELECT * FROM tbl_customer_pay WHERE pi_date='$currentDate' AND c_id='$id'";
         $rsCreditSelected = $conn->query($sqlCreditSelected);
 
-      if($rsBookingsSelected->num_rows > 0 || $V->num_rows>0 ){
+      if($rsBookingsSelected->num_rows > 0){
         while($rowBSelected = $rsBookingsSelected->fetch_assoc()){
           $bid= $rowBSelected['b_id'];
           $flightValSelected = getSumValue($conn,'sell_amount','tbl_passenger_flight_bookings','b_id',$bid);
           $hotelValSelected =getSumValue($conn,'sell_amount','tbl_hote_det','b_id',$bid);;
           $transferValSelected =getSumValue($conn,'sell_amount','tbl_transfer','b_id',$bid);
           $otherValSelected =getSumValue($conn,'sell_price','tbl_other_charges','b_id',$bid);
-          $drOrCrSel="DR";
-          $drOrCr=$drOrCrSel;
 
-          if($rsCreditSelected->num_rows >0){
-            $rowBCredit = $rsCreditSelected->fetch_assoc();
-            $selected_total_cred = $rowBCredit['tot_paid'];
-            echo "<hr>Total paid $selected_total_cred <hr>";
-            $drOrCrCred="CR";
-            $drOrCr=$drOrCrCred;
-          }
-
-          // $selected_total_cred = $rowBCredit['tot_paid'];
-
-          
           $selected_total_debt = $flightValSelected + $hotelValSelected + $transferValSelected + $otherValSelected;
 
-          // $opening_ballance ="1000"; CR
-
-        
-
-          if ($drOrCr=="DR") {
-            $amount=$opening_ballance + $selected_total_debt;
-           $closing_ballance += $amount;
-          }else {
-            $amount=$opening_ballance + $selected_total_cred;
-            $closing_ballance -= $amount;
+          if($closing_ballance == 0){
+            $closing_ballance +=$selected_total_debt;
+            $cbDrOrCr = "DR";
+          }
+          else if($cbDrOrCr == "CR"){
+            if($closing_ballance > $selected_total_debt){
+              $closing_ballance -=$selected_total_debt;
+            }
+            else {
+              $closing_ballance =$selected_total_debt -$closing_ballance;
+              $cbDrOrCr = "DR";
+            }
+          }
+          else {
+            $closing_ballance +=$selected_total_debt;
+            $cbDrOrCr = "DR";
           }
 
           ?>
-          <tr>
-            <td> <?= $currentDate ?> </td>
-            <td> | <?= $bid ?> (description) </td>
-            <?php 
-              if ($selected_total_cred==0) {
-                ?> 
-                 <td> |<?= $selected_total_debt,$drOrCr ?>  </td><!-- DR --> 
-                 <td> |</td><!-- CR -->
-                <?php
-                
-              }else if ($selected_total_debt==0) {
-                ?> 
-                 <td> |</td><!-- DR -->
-                 <td> |<?= $selected_total_cred,$drOrCr ?>  </td><!-- DR --> 
-                <?php
-
-              }
-            ?>
-           
-          
-            <td> |<?= $closing_ballance,$drOrCr ?></td><!-- Closing Balance -->
-          </tr>
+            <tr>
+              <td> <?= $currentDate ?> </td>
+              <td> <?= $bid ?> (description) </td>
+              <td> <?= $selected_total_debt ?> </td>
+              <td> </td>
+              <td> <?= $closing_ballance,$cbDrOrCr ?></td><!-- Closing Balance -->
+            </tr>
           <hr>
           <?php
-
         }
       }
-      else {
-        // echo "$sqlBookingsSelected";
+
+      if($rsCreditSelected->num_rows > 0){
+        while($rowCredit = $rsCreditSelected->fetch_assoc()){
+          $selected_total_cred = $rowCredit['pi_amount'];
+
+          $rid = $rowCredit['cp_id'];
+
+          if($closing_ballance == 0){
+            $closing_ballance +=$selected_total_cred;
+            $cbDrOrCr = "CR";
+          }
+          else if($cbDrOrCr == "DR"){
+            if($closing_ballance > $selected_total_cred){
+              $closing_ballance -=$selected_total_cred;
+            }
+            else {
+              $closing_ballance =$selected_total_cred -$closing_ballance;
+              $cbDrOrCr = "CR";
+            }
+          }
+          else {
+            $closing_ballance +=$selected_total_cred;
+            $cbDrOrCr = "CR";
+          }
+
+          ?>
+            <tr>
+              <td> <?= $currentDate ?> </td>
+              <td> <?= $rid ?> (description) </td>
+              <td>  </td>
+              <td> <?= $selected_total_cred ?> </td>
+              <td> <?= $closing_ballance,$cbDrOrCr ?></td><!-- Closing Balance -->
+            </tr>
+
+          <?php
+        }
       }
 
 
 
     }
-    exit();
 
-
-
-
-
-
-
-
-
-
-
-
-//
-//
-// $tot_debt = "1000";
-//
-// $tot_recived = "300";
-//
-// $opening_balance = "700"."CR";
-// // done
-//
-// $selectedDate_tot_deb = "400";
-//
-// $selectedDate_tot_recived = "100";
-//
-// $amount  ="300"."DR";
-//
-// $closingBalance = "400"."CR";
-//
-// $sql ="";
 
 
 
