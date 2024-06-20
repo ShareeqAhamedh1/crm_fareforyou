@@ -171,7 +171,6 @@ $closing_ballance=0;
                                                   <td> </td>
                                                   <td> £<?= number_format($closing_ballance,2) ?> <?= $cbDrOrCr ?> </td><!-- Closing Balance -->
                                                 </tr>
-                                              <hr>
                                               <?php
                                             }
                                           }
@@ -222,4 +221,7 @@ $closing_ballance=0;
                                           </tbody>
                                        </table>
                                     </div>
+
+                                    <a href="statement/statement.php?customer_id=<?= $id ?>&date_from=<?= $fromDate ?>&date_to=<?= $toDate ?>" target="_blank" class="btn btn-warning btn-sm">Download Customer Statement</a>
+
                                  </div>

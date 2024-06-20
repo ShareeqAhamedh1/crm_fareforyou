@@ -1,0 +1,82 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.statement-container {
+    width: 90%;
+    margin: 40px auto;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #007bff;
+}
+
+header .company-details {
+    display: flex;
+    align-items: center;
+}
+
+header .company-details .logo {
+    width: 80px;
+    height: auto;
+    margin-right: 20px;
+}
+
+header .company-details h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #007bff;
+}
+
+header .statement-details p {
+    margin: 0;
+    padding: 4px 0;
+    font-size: 14px;
+}
+
+.statement-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.statement-table th, .statement-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.statement-table th {
+    background: #007bff;
+    color: #fff;
+    font-weight: 500;
+}
+
+.statement-table tr:hover {
+    background: #f1f1f1;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid #007bff;
+    background: #f9f9f9;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}

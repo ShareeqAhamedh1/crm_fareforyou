@@ -62,7 +62,7 @@
          </div>
 
          <div class="modal fade" id="customer1" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" style="display:inline-block; width: auto; max-width: 90%;">
+            <div class="modal-dialog modal-lg">
                <div class="modal-content">
                   <div class="modal-header modal-header-primary">
                      <h3><i class="fa fa-user m-r-5"></i> Search & select Customer</h3>
