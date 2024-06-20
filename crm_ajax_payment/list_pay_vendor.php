@@ -14,6 +14,7 @@ $vid = $conn->real_escape_string(trim($_REQUEST['c_id']));
          <th>Description</th>
          <th>Date</th>
          <th>Payment Type</th>
+         <th>Status</th>
 
          <th>Action</th>
 
@@ -30,15 +31,17 @@ $vid = $conn->real_escape_string(trim($_REQUEST['c_id']));
           $paytypeid = $rowCus['pm_id'];
           $paytype = getDataBack($conn,'tbl_payment_method','pm_id',$paytypeid,'pm_type');
           $vpid = $rowCus['vp_id'];
-          $sqlStatus ="SELECT * FROM tbl_set_off_invoice WHERE cp_id='$vpid'";
+          $sqlStatus ="SELECT * FROM tbl_set_off_invoice_vendor WHERE vp_id='$vpid'";
           $rsStatus = $conn->query($sqlStatus);
           $countStat =$rsStatus->num_rows;
           if($countStat > 0){
             $statRec = "Paired";
+            $stat=0;
             $styleRec ="color:#09bd84;font-weight:bold;";
           }
           else{
             $statRec = "Not Paired";
+            $stat=1;
             $styleRec ="color:grey;font-weight:bold;";
           }
      ?>
@@ -49,7 +52,15 @@ $vid = $conn->real_escape_string(trim($_REQUEST['c_id']));
        <td><?= htmlspecialchars($rowCus['pi_date']) ?></td>
        <td><?= $paytype ?></td>
 
-       <td><button type="button" onclick="delSup(<?= $rowCus['vp_id'] ?>,<?= $vid ?>)" class="btn btn-danger btn-sm" name="button">Delete</button> </td>
+       <td> 
+         <?php if ($stat==1) {
+            
+            ?>
+            <a href="#" onclick="pairPaymnetVendors(<?= $rowCus['vp_id'] ?>,<?= $vid ?>)"  class="btn btn-info btn-sm">Pair Payment</a>
+            <?php
+          } ?>
+        
+        <button type="button" onclick="delSup(<?= $rowCus['vp_id'] ?>,<?= $vid ?>)" class="btn btn-danger btn-sm" name="button">Delete</button> </td>
 
      </tr>
    <?php

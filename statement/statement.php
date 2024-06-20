@@ -231,5 +231,11 @@
             <p>&copy; 2024 fareforyou limited. All rights reserved.</p>
         </footer>
     </div>
+
+    <script>
+        window.onload = function() {
+            window.print();
+        };
+    </script>
 </body>
 </html>
