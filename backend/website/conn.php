@@ -29,7 +29,7 @@ $current_date_time = date('Y/m/d H:i:s');
 
 $conn = new mysqli($servername,$username,$password,$dbname);
 
-// $connWeb = new mysqli($servername_web,$username_web,$password_web,$dbname_web);
+$connWeb = new mysqli($servername_web,$username_web,$password_web,$dbname_web);
 
 if(isset($_SESSION['u_id'])){
   $u_id = $_SESSION['u_id'];

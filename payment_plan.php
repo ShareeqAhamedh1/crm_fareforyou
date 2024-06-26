@@ -21,11 +21,25 @@
                            <div class="card lobicard"  data-sortable="true">
                                <div class="card-header">
                                    <div class="card-title custom_title">
-                                       <h4>Client Credit summary Report</h4>
+                                       <h4>Client Credit Summary Report</h4>
                                    </div>
                                </div>
                               <div class="card-body">
                                 <div class="row">
+                                    <div class="col-lg-3">
+                                      <label for="">Tour Type</label>
+                                      <select class="form-control" id="t_pack" name="t_pack" required>
+                                        <option value="all">All</option>
+                                        <?php
+                                         $sqlTourPackage = "SELECT * FROM tbl_tour";
+                                         $rsTourPackage = $conn->query($sqlTourPackage);
+                                         if($rsTourPackage->num_rows > 0){
+                                           while($rowTour = $rsTourPackage->fetch_assoc()){
+                                         ?>
+                                         <option value="<?= $rowTour['tr_id'] ?>"><?= $rowTour['tr_title'] ?></option>
+                                        <?php } } ?>
+                                      </select>
+                                    </div>
                                     <div class="col-lg-3">
                                        <label for="">From</label>
                                         <input type="date" id="date_from" class="form-control" placeholder="Date From">
@@ -34,7 +48,7 @@
                                        <label for="">To</label>
                                         <input type="date" id="date_to" class="form-control" placeholder="Date To">
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-2">
                                       <br>
                                         <button type="button" class="btn btn-primary btn-sm" onclick="searchInvoice()">Preview</button>
                                     </div>
@@ -107,10 +121,17 @@
             function searchInvoice(){
               var cdate_from = document.getElementById('date_from').value;
               var cdate_to = document.getElementById('date_to').value;
+              var t_pack = document.getElementById('t_pack').value;
+
+              if(cdate_from == "" || cdate_to == ""){
+                alert('Please Select The Date Range');
+                return false;
+              }
 
               $('#invoice_load_details').load('crm_ajax_invoices/invoice_setup.php',{
                 date_from:cdate_from,
-                date_to:cdate_to
+                date_to:cdate_to,
+                tpack_id:t_pack
               });
             }
 

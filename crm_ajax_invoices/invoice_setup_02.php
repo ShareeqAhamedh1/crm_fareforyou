@@ -93,16 +93,13 @@ $finalAmountCr=0;
 
                                                 $setofarray = array();
 
-                                                if($tpack_id != "all"){
-                                                  $sqlBookingsSelected = "SELECT * FROM tbl_booking WHERE booked_date_time BETWEEN '$fromDate' AND '$toDate' AND c_id='$id'  AND tour_id='$tpack_id'";
-                                                }
-                                                else {
+                                                if($tpack_id == "all"){
                                                   $sqlBookingsSelected = "SELECT * FROM tbl_booking WHERE booked_date_time BETWEEN '$fromDate' AND '$toDate' AND c_id='$id'";
                                                 }
-
+                                                else {
+                                                  $sqlBookingsSelected = "SELECT * FROM tbl_booking WHERE booked_date_time BETWEEN '$fromDate' AND '$toDate' AND c_id='$id'  AND tour_id='$tpack_id'";
+                                                }
                                                 $rsBookingsSelected = $conn->query($sqlBookingsSelected);
-
-
                                                 if($rsBookingsSelected->num_rows > 0){
                                                   while($rowBSelected = $rsBookingsSelected->fetch_assoc()){
                                                     $bid= $rowBSelected['b_id'];
@@ -117,12 +114,13 @@ $finalAmountCr=0;
                                                       while($rowPush = $rsPush->fetch_assoc()){
                                                         $cp_id = $rowPush['cp_id'];
                                                         array_push($setofarray,$cp_id);
+
                                                       }
                                                     }
+
+
                                                   }
                                                 }
-
-                                                $selected_total_debt = $selected_flightVal + $selected_hotelVal + $selected_transferVal + $selected_otherVal;
 
                                                 $selected_total_debt = $selected_flightVal + $selected_hotelVal + $selected_transferVal + $selected_otherVal;
 
@@ -133,21 +131,11 @@ $finalAmountCr=0;
                                                 }
                                                 else{
                                                   $sqlCreditSelected = "SELECT SUM(pi_amount) AS tot_paid FROM tbl_customer_pay WHERE pi_date BETWEEN '$fromDate' AND '$toDate' AND cp_id IN ($convertedSetOfValues)";
+                                                  // $sqlCreditSelected = "SELECT SUM(pi_amount) AS tot_paid FROM tbl_customer_pay WHERE pi_date BETWEEN '$fromDate' AND '$toDate' AND c_id='$id'";
                                                 }
+                                                // echo "$sqlCreditSelected <hr>";
+                                                $rsCreditSelected = $conn->query($sqlCreditSelected);
 
-                                                $convertedSetOfValues = implode(',',$setofarray);
-
-                                                if($tpack_id == "all"){
-                                                  $sqlCreditSelected = "SELECT SUM(pi_amount) AS tot_paid FROM tbl_customer_pay WHERE pi_date BETWEEN '$fromDate' AND '$toDate' AND c_id='$id'";
-                                                }
-                                                else{
-                                                  if($convertedSetOfValues != ""){
-                                                    $sqlCreditSelected = "SELECT SUM(pi_amount) AS tot_paid FROM tbl_customer_pay WHERE pi_date BETWEEN '$fromDate' AND '$toDate' AND cp_id IN ($convertedSetOfValues)";
-                                                  }
-                                                }
-                                                if($convertedSetOfValues != ""){
-                                                  $rsCreditSelected = $conn->query($sqlCreditSelected);
-                                                }
                                                 if($rsCreditSelected->num_rows >0){
                                                   $rowCreditSelected = $rsCreditSelected->fetch_assoc();
                                                   $selected_total_Cred = $rowCreditSelected['tot_paid'];
@@ -157,69 +145,59 @@ $finalAmountCr=0;
                                                 }
 
                                                 $DrOrCrSel = "";
-                                                $balance_am =0;
+                                                $amount=0;
 
-                                                if ($selected_total_debt != 0 || $selected_total_Cred != 0) {
-                                                    if ($selected_total_debt == $selected_total_Cred) {
-                                                        $DrOrCrSel = "Cr";
-                                                        $balance_am = 0;
-                                                    } else if ($selected_total_debt > $selected_total_Cred) {
-                                                        $DrOrCrSel = "Dr";
-                                                        $balance_am = $selected_total_debt - $selected_total_Cred;
-                                                    } else {
-                                                        $DrOrCrSel = "Cr";
-                                                        $balance_am = $selected_total_Cred - $selected_total_debt;
+                                                if($selected_total_Cred == 0){
+                                                  $DrOrCrSel = "Dr";
+                                                  $amount =$selected_total_debt;
+                                                }
+                                                else if($selected_total_debt > $selected_total_Cred){
+                                                  $DrOrCrSel = "Dr";
+                                                  $amount=$selected_total_debt-$selected_total_Cred;
+                                                }
+                                                else {
+                                                  $DrOrCrSel = "Cr";
+                                                  $amount=$selected_total_Cred-$selected_total_debt;
+                                                }
+
+                                                $DrOrCrFinal="";
+                                                if ($DrOrCr==$DrOrCrSel) {
+                                                    $closing_ballance=$opening_ballance+$amount;
+                                                    $DrOrCrFinal=$DrOrCr;
+                                                }else if($DrOrCr=="Cr" && $DrOrCrSel=="Dr") {
+                                                    if ($opening_ballance>$amount) {
+                                                        $closing_ballance=$opening_ballance-$amount;
+                                                        $DrOrCrFinal="Cr";
+
+                                                    }else{
+                                                        $closing_ballance=$amount-$opening_ballance;
+                                                        $DrOrCrFinal="Dr";
                                                     }
 
-                                                    if ($opening_ballance == 0) {
-                                                        $closing_ballance = $balance_am;
-                                                        $DrOrCr = $DrOrCrSel; // Set the DrOrCr based on the current calculation
-                                                    } else {
-                                                        if ($DrOrCr == $DrOrCrSel) {
-                                                            $closing_ballance += $balance_am;
-                                                        } else {
-                                                            if ($DrOrCr == "Dr") {
-                                                                if ($opening_ballance > $balance_am) {
-                                                                    $DrOrCrSel = "Dr";
-                                                                    $closing_ballance = $opening_ballance - $balance_am;
-                                                                } else {
-                                                                    $DrOrCrSel = "Cr";
-                                                                    $closing_ballance = $balance_am - $opening_ballance;
-                                                                }
-                                                            } else if ($DrOrCr == "Cr") {
-                                                                if ($opening_ballance > $balance_am) {
-                                                                    $DrOrCrSel = "Cr";
-                                                                    $closing_ballance = $opening_ballance - $balance_am;
-                                                                } else {
-                                                                    $DrOrCrSel = "Dr";
-                                                                    $closing_ballance = $balance_am - $opening_ballance;
-                                                                }
-                                                            }
-                                                        }
+                                                }else if($DrOrCr=="Dr" && $DrOrCrSel=="Cr"){
+                                                    if ($opening_ballance>$amount) {
+                                                        $closing_ballance=$opening_ballance-$amount;
+                                                        $DrOrCrFinal="Dr";
+                                                    }else{
+                                                        $closing_ballance=$amount-$opening_ballance;
+                                                        $DrOrCrFinal="Cr";
                                                     }
                                                 }
 
-
-
-                                                $finalDebt +=$selected_total_debt;
-                                                $finalCr +=$selected_total_Cred;
-
-                                                if($DrOrCrSel == "Dr"){
+                                                if($DrOrCrFinal == "Dr"){
                                                   $finalAmountDr +=$closing_ballance;
                                                 }
 
-                                                if($DrOrCrSel == "Cr") {
+                                                if($DrOrCrFinal == "Cr") {
                                                   $finalAmountCr +=$closing_ballance;
                                                 }
 
-                                                $skip_use = $selected_total_debt+ $selected_total_Cred;
+                                                $skip_use = $selected_total_debt+ $selected_total_Cred + $closing_ballance + $opening_ballance;
                                                 if($skip_use == 0){
                                                   continue;
                                                 }
                                                 else{
-                                                ?>
-
-
+                                            ?>
 
        <tr>
         <td> <?= "#FFC 00$id" ?> </td>
@@ -229,10 +207,12 @@ $finalAmountCr=0;
         <td> £<?= number_format($selected_total_debt,2) ?> </td>
         <td> £<?= number_format($selected_total_Cred,2) ?> </td>
         <td> £<?= number_format($closing_ballance,2) ?> </td>
-        <td> <span style="font-weight:bold;color:<?php if($DrOrCrSel =='Dr'){ echo '#0af295'; }else{ echo '#066d80'; } ?>;"><?= $DrOrCrSel ?></span>  </td>
+        <td> <span style="font-weight:bold;color:<?php if($DrOrCrFinal =='Dr'){ echo '#0af295'; }else{ echo '#066d80'; } ?>;"><?= $DrOrCrFinal ?></span>  </td>
        </tr>
        <?php
      }
+        // break;
+
          }
        }
 
@@ -248,9 +228,7 @@ $finalAmountCr=0;
 
        ?>
        <tr>
-         <td colspan="4" > <div style="float:right;font-weight:bold;"> Total </div>  </td>
-         <td colspan="1" style="font-weight:bold;"> £<?= number_format($finalDebt,2) ?> </td>
-         <td colspan="1" style="font-weight:bold;"> £<?= number_format($finalCr,2) ?> </td>
+         <td colspan="6" > <div style="float:right;font-weight:bold;"> Total </div>  </td>
          <td colspan="1" style="font-weight:bold;"> £<?= number_format($finalAmountDr,2) ?> </td>
          <td colspan="1"> <span style="font-weight:bold;color:<?php if($DrOrCrTot =='Dr'){ echo '#0af295'; }else{ echo '#066d80'; } ?>;"><?= $DrOrCrTot ?></span>  </td>
        </tr>
