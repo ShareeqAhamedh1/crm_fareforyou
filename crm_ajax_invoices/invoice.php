@@ -30,12 +30,23 @@ $uid = $_SESSION['u_id'];
                                             $paymentPlan = isset($_REQUEST['payment_plan']) ? $_REQUEST['payment_plan'] : '';
                                             $status = isset($_REQUEST['status']) ? $_REQUEST['status'] : '';
 
-                                            // Build dynamic WHERE clause
+                                            $sqlSearchE = "SELECT * FROM tbl_passenger_flight_bookings WHERE e_ticket_no LIKE '%$skey%'";
+                                            $rsSearchE = $conn->query($sqlSearchE);
                                             $whereClause = [];
 
 
+                                            // Build dynamic WHERE clause
+
+
                                             if ($skey) {
+                                              if($rsSearchE->num_rows > 0){
+                                                $rowE = $rsSearchE->fetch_assoc();
+                                                $eBid = $rowE['b_id'];
+                                                $whereClause[] = "(b_id LIKE '%$eBid%' OR user_name LIKE '%$skey%' OR customer_name LIKE '%$skey%' OR e_ticket_no LIKE '%$skey%')";
+                                              }
+                                              else {
                                                 $whereClause[] = "(b_id LIKE '%$skey%' OR user_name LIKE '%$skey%' OR customer_name LIKE '%$skey%' OR e_ticket_no LIKE '%$skey%')";
+                                              }
                                             }
                                             if ($dateFrom && $dateTo) {
                                                 $whereClause[] = "booked_date_time BETWEEN '$dateFrom' AND '$dateTo'";
@@ -49,12 +60,14 @@ $uid = $_SESSION['u_id'];
                                             }
 
 
+
                                             // Construct SQL query
                                             $sqlBooking = "SELECT * FROM vw_booking_details";
                                             if (!empty($whereClause)) {
                                                 $sqlBooking .= " WHERE " . implode(" AND ", $whereClause);
                                             }
                                             $sqlBooking .= " ORDER BY `vw_booking_details`.`b_id` DESC";
+
 
                                             // Execute query
                                             $rsBooking = $conn->query($sqlBooking);
@@ -78,8 +91,8 @@ $uid = $_SESSION['u_id'];
                                                    $psta = $rowsBooking['p_sta'];
                                                    $pay_term= getDataBack($conn,'tbl_booking','b_id',$bid,'pay_term');
                                                    $invoice_status_code= getDataBack($conn,'tbl_booking','b_id',$bid,'status');
-                                                   $customerName= getDataBack($conn,'tbl_customer_info','c_id',$cid,'c_f_name');
-                                                  
+                                                   $customerName= getDataBack($conn,'tbl_customer_info','c_id',$cid,'c_f_name')." ".getDataBack($conn,'tbl_customer_info','c_id',$cid,'c_l_name');
+
                                                    $sqlBstatus="SELECT * FROM tbl_booking WHERE b_id='$bid'";
                                                    $rsBstatus=$conn->query($sqlBstatus);
 
@@ -116,7 +129,7 @@ $uid = $_SESSION['u_id'];
                   class="btn btn-info btn-sm">Add/View Details</a> </td>
                   <td>
                     <?php if ($u_type != 4) { ?>
-                     <a href="#" class="btn btn-warning btn-sm" onclick="openEditInvoice(<?= $bid ?>,<?= $cid ?>)"><i class="fa fa-pencil"></i></a>
+                     <a class="btn btn-warning btn-sm" onclick="openEditInvoice(<?= $bid ?>,<?= $cid ?>)"><i class="fa fa-pencil"></i></a>
                    <?php } ?>
                     </td>
        </tr>

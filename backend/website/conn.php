@@ -8,10 +8,10 @@ $username = "root";
 $password = "";
 $dbname = "db_crm_fareforyou";
 
-// $servername_web = "localhost";
-// $username_web = "root";
-// $password_web = "";
-// $dbname_web = "db_fareforyou";
+$servername_web = "localhost";
+$username_web = "root";
+$password_web = "";
+$dbname_web = "db_fareforyou";
 
 
 // $servername_web = "localhost";

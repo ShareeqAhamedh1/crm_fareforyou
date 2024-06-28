@@ -128,7 +128,7 @@ $closing_ballance=0;
                                         for ($date = $startDate; $date < $endDate; $date->modify('+1 day')) {
                                             $currentDate = $date->format('Y-m-d');
 
-                                            $sqlBookingsSelected = "SELECT * FROM tbl_booking WHERE booked_date_time = '$currentDate' AND c_id='$id'";
+                                            $sqlBookingsSelected = "SELECT * FROM tbl_booking WHERE booked_date_time = '$currentDate' AND c_id='$id' AND status=0";
                                             $rsBookingsSelected = $conn->query($sqlBookingsSelected);
 
                                             $sqlCreditSelected = "SELECT * FROM tbl_customer_pay WHERE pi_date='$currentDate' AND c_id='$id'";

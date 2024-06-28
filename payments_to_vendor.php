@@ -206,8 +206,12 @@
                        document.getElementById('p_amount').value='';
                        document.getElementById('desc').value='';
                        document.getElementById('pmethod_id').value='';
-                       $('#payment_table').load('crm_ajax_payment/pair_invoice_vendor.php',{v_id:vid });
-                     swal("Payment Success", "Pair the recipt with invoice to complete the recipt", "success");  }
+                      $('#payment_table').load('crm_ajax_payment/list_pay_vendor.php',{c_id:vid });
+                      swal({
+                          icon: 'success',
+                          title: 'Payment Success'
+                      });
+                   }
                      else {
                        console.log(resp);
                      }
@@ -320,16 +324,7 @@
 
             }
 
-            function pairPaymnetVendors(vp_id,vid){
-              var vp_id=vp_id;
-              var vid=vid;
-
-              $('#payment_table').load('crm_ajax_payment/pair_invoice_vendor.php',{vp_id:vp_id});
-
-
-            }
-
-            function pairInvoiceVendor(cid){
+            function pairInvoice(cid){
 
               if ($("input[name='bid[]']:checked").length === 0) {
                 // No checkboxes are checked, perform the desired action
@@ -344,7 +339,7 @@
              .then((willSave) => {
                  if (willSave) {
                      // Perform your desired action when user confirms
-                     $('#payment_table').load('crm_ajax_payment/list_pay_vendor.php',{c_id:cid });
+                     $('#payment_table').load('crm_ajax_payment/list_pay.php',{c_id:cid });
                      // You can add additional code here if needed
                  } else {
                      // Action when user cancels
@@ -358,12 +353,12 @@
 
               $.ajax({
                   type: "POST",
-                  url: "backend/pair_invoice_vendor.php",
+                  url: "backend/pair_invoice.php",
                   data: formData,
                   success: function(response) {
                     // alert(response);
                       // Handle the response from the server
-                      $('#payment_table').load('crm_ajax_payment/list_pay_vendor.php',{c_id:response });
+                      $('#payment_table').load('crm_ajax_payment/list_pay.php',{c_id:response });
                   },
                   error: function(jqXHR, textStatus, errorThrown) {
                       // Handle errors here

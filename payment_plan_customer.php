@@ -1,6 +1,17 @@
 <?php include("layouts/header.php");
 
  ?>
+ <?php
+
+
+   $name = "";
+   $ccid = "";
+
+   if(isset($_REQUEST['name'])){
+     $name = $_REQUEST['name'];
+     $ccid = $_REQUEST['ccid'];
+   }
+  ?>
          <!-- =============================================== -->
          <!-- Content Wrapper. Contains page content -->
          <div class="content-wrapper">
@@ -31,9 +42,9 @@
                                        <button type="button" class="btn btn-primary" name="button" onclick="openModelCustomer()">Select Customer</button>
                                        <div class="form-grop">
 
-                                        <input type="text" name="" id="customer_selected" class="form-control" disabled>
+                                        <input type="text" name="" id="customer_selected" value="<?= $name ?>" class="form-control" disabled>
                                     </div>
-                                    <input type="hidden" id="customer_id" name="customer_id" value="">
+                                    <input type="hidden" id="customer_id" name="customer_id" value="<?= $ccid ?>">
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="">From</label>
@@ -101,6 +112,7 @@
 
 
          <script type="text/javascript">
+
         //  function redirectToPayNow() {
         //   const checkedBids = Array.from(document.querySelectorAll('input[name="bid[]"]:checked'))
         //     .map(cb => cb.value);

@@ -68,7 +68,7 @@ else{
      ?>
      <tr>
        <td>#RCP 000<?= htmlspecialchars($rowCus['cp_id']) ?></td>
-       <td> <?= getDataBack($conn,'tbl_customer_info','c_id',$cid,'c_f_name') ?>  </td>
+       <td> <?= getDataBack($conn,'tbl_customer_info','c_id',$cid,'c_f_name') ?> <?= getDataBack($conn,'tbl_customer_info','c_id',$cid,'c_l_name') ?>  </td>
        <td>£ <?= number_format($rowCus['pi_amount'], 2, '.', ',') ?></td>
        <td><?= htmlspecialchars($rowCus['pi_date']) ?></td>
        <td><?= $paytype ?>(<?= $payRef ?>)</td>

@@ -81,13 +81,13 @@
          <!-- /.content-wrapper -->
          <?php include("layouts/footer.php"); ?>
          <script type="text/javascript">
-        
+
             function goBackCustomers(){
                 $('#payment_data').empty();
                 $('#payment_table').empty();
                 $('#loadCustomers').load('crm_ajax/select_customer_recipt.php');
             }
-    
+
             function selectLedger(id){
               // alert(id);
               if(id == 1){
@@ -209,13 +209,8 @@
                });
             }
 
-            function pairPaymnet(cp_id,cid){
-              var cp_id=cp_id;
-              var cid=cid;
-              
-              $('#payment_table').load('crm_ajax_payment/pair_invoice.php',{cp_id:cp_id});
-            
-
+            function pairPaymnet(vcp_id,cid){
+              $('#payment_table').load('crm_ajax_payment/pair_invoice.php',{c_id:cid,cp_id:vcp_id});
             }
 
             function pairInvoice(cid){

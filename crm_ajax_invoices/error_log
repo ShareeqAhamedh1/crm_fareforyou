@@ -11,3 +11,8 @@
 [21-May-2024 12:24:15 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 38
 [21-May-2024 12:24:35 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 38
 [21-May-2024 12:25:10 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 38
+[27-Jun-2024 12:29:43 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 205
+[27-Jun-2024 12:29:50 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 205
+[27-Jun-2024 12:29:50 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 205
+[27-Jun-2024 12:30:10 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 205
+[27-Jun-2024 12:30:30 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in /home/posfkpop/fareforyou.co.uk/crm/crm_ajax_invoices/invoice_setup.php on line 205

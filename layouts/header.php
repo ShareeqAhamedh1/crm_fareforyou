@@ -315,7 +315,7 @@
                      }
                   ?>
                   <?php
-                     if ($u_type == 1) {
+                     if ($u_type!=4) {
                         ?>
 
                                           <li class="treeview">

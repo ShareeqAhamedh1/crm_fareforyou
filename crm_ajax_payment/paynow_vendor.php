@@ -40,6 +40,6 @@ $v_id=$_REQUEST['c_id'];
 
 
 <div class="button">
-<button class="btn green_btn" onclick="submitPayNowVendor()">Pair With Invoice</button>
+<button class="btn green_btn" onclick="submitPayNowVendor()">Pay now</button>
 <!-- <a class="btn green_btn">Add</a> -->
 </div>
