@@ -15,6 +15,9 @@
                   <small>Payments List</small>
                </div>
             </section>
+
+
+
             <!-- Main content -->
             <section class="content">
                <div class="row">
@@ -33,7 +36,7 @@
                                        <label for="">Select Ledger</label>
                                        <select class="form-control" name="" onchange="selectLedger(this.value)">
                                          <option value="">Select Ledger</option>
-                                         <!-- <option value="1">Customer Ledger</option> -->
+                                         <option value="1">Customer Ledger</option>
                                          <option value="2">Supplier Ledger</option>
                                          <option value="3">General Ledger</option>
                                        </select>
@@ -70,12 +73,8 @@
                         <div class="modal-body" id="load_data">
 
                         </div>
-
-
                </div>
-               <!-- /.modal-content -->
             </div>
-            <!-- /.modal-dialog -->
          </div>
          <!-- /.modal -->
          <!-- /.content-wrapper -->
@@ -85,7 +84,7 @@
             function goBackCustomers(){
                 $('#payment_data').empty();
                 $('#payment_table').empty();
-                $('#loadCustomers').load('crm_ajax/select_customer_recipt.php');
+                $('#loadCustomers').load('crm_ajax/select_customer_pay.php');
             }
 
             function goBackVendor(){
@@ -99,7 +98,7 @@
               if(id == 1){
                 $('#payment_data').empty();
                 $('#payment_table').empty();
-                $('#loadCustomers').load('crm_ajax/select_customer_recipt.php');
+                $('#loadCustomers').load('crm_ajax/select_customer_pay.php');
               }
               else if (id == 2) {
                 $('#payment_data').empty();
@@ -112,7 +111,7 @@
               $('#payment_data').empty();
               $('#payment_table').empty();
               var skey = document.getElementById('skey').value;
-              $('#loadCustomers').load('crm_ajax/select_customer_recipt.php',{
+              $('#loadCustomers').load('crm_ajax/select_customer_pay.php',{
                 s_key:skey
               });
             }
@@ -126,12 +125,11 @@
               });
             }
 
-            function issueRecipt(cid){
+            function payToCustomer(cid){
               $('#loadCustomers').empty();
-              $('#payment_data').load('crm_ajax_payment/paynow.php',{c_id:cid });
-              $('#payment_table').load('crm_ajax_payment/list_pay.php',{c_id:cid });
+              $('#payment_data').load('crm_ajax_payment/paynow_customer.php',{c_id:cid });
+              $('#payment_table').load('crm_ajax_payment/list_pay_customer.php',{c_id:cid });
             }
-
 
             function issueReciptVendors(cid){
               $('#loadCustomers').empty();
@@ -219,7 +217,7 @@
                });
             }
 
-            function submitPayNow(){
+            function submitPayToCustomer(){
 
               var p_date=document.getElementById('p_date').value;
               var p_amount=document.getElementById('p_amount').value;
@@ -263,15 +261,9 @@
                   return false; // Prevent form submission
               }
 
-              if(pmethod_id == 2){
-                if(desc == ""){
-                  document.getElementById('warning-text').style.display = "block";
-                  return;
-                }
-              }
 
               $.ajax({
-                 url:'backend/one_payment.php',
+                 url:'backend/payToCustomer.php',
                  method:'POST',
                  data:{
                   e_p_date:p_date,
@@ -286,8 +278,8 @@
                        document.getElementById('p_amount').value='';
                        document.getElementById('desc').value='';
                        document.getElementById('pmethod_id').value='';
-                      $('#payment_table').load('crm_ajax_payment/pair_invoice.php',{c_id:cid });
-                     swal("Payment Success", "Pair the recipt with invoice to complete the recipt", "success");  }
+                      $('#payment_table').load('crm_ajax_payment/list_pay_customer.php',{c_id:cid });
+                     swal("Payment Success", "You have Successfully Paid To Customer", "success");  }
                      else {
                        console.log(resp);
                      }
@@ -315,57 +307,6 @@
 
           }
 
-            function pairPaymnet(cp_id,cid){
-              var cp_id=cp_id;
-              var cid=cid;
-
-              $('#payment_table').load('crm_ajax_payment/pair_invoice.php',{cp_id:cp_id});
-
-
-            }
-
-            function pairInvoice(cid){
-
-              if ($("input[name='bid[]']:checked").length === 0) {
-                // No checkboxes are checked, perform the desired action
-
-                swal({
-             title: "Invoice Not Paired",
-             text: "You're trying to save the receipt without pairing it with an invoice.",
-             icon: "warning",
-             buttons: true,
-             dangerMode: true,
-             })
-             .then((willSave) => {
-                 if (willSave) {
-                     // Perform your desired action when user confirms
-                     $('#payment_table').load('crm_ajax_payment/list_pay.php',{c_id:cid });
-                     // You can add additional code here if needed
-                 } else {
-                     // Action when user cancels
-                     console.log("User cancelled the action.");
-                 }
-             });
-                return; // Prevent the form from being submitted
-            }
-
-              var formData = $("#pairInvoiceForm").serialize(); // Serialize the form data
-
-              $.ajax({
-                  type: "POST",
-                  url: "backend/pair_invoice.php",
-                  data: formData,
-                  success: function(response) {
-                    // alert(response);
-                      // Handle the response from the server
-                      $('#payment_table').load('crm_ajax_payment/list_pay.php',{c_id:response });
-                  },
-                  error: function(jqXHR, textStatus, errorThrown) {
-                      // Handle errors here
-                      console.error(textStatus, errorThrown);
-                  }
-              });
-            }
 
 
 

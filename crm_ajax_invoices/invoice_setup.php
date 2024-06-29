@@ -5,6 +5,10 @@ $toDate = isset($_REQUEST['date_to']) ? $_REQUEST['date_to'] : '';
 
 $tpack_id = $_REQUEST['tpack_id'];
 
+$opening_ballance =0;
+$finalDebt=0;
+$finalCr=0;
+
 $finalAmountDr = 0;
 $finalAmountCr = 0;
 ?>
@@ -108,7 +112,7 @@ $finalAmountCr = 0;
                         }
 
 
-                        if($setofarray == ""){
+                        if(empty($setofarray)){
                           $selected_total_credit = 0;
                         }
                         else{

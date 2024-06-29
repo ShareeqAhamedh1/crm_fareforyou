@@ -134,6 +134,9 @@ $closing_ballance=0;
                                             $sqlCreditSelected = "SELECT * FROM tbl_customer_pay WHERE pi_date='$currentDate' AND c_id='$id'";
                                             $rsCreditSelected = $conn->query($sqlCreditSelected);
 
+                                            $sqlPaid = "SELECT * FROM tbl_payments_to_customer WHERE pc_date='$currentDate' AND c_id='$id'";
+                                            $rsPaid = $conn->query($sqlPaid);
+
                                           if($rsBookingsSelected->num_rows > 0){
                                             while($rowBSelected = $rsBookingsSelected->fetch_assoc()){
                                               $bid= $rowBSelected['b_id'];
@@ -175,6 +178,39 @@ $closing_ballance=0;
                                             }
                                           }
 
+                                          if($rsPaid->num_rows > 0){
+                                            $rowPaid=$rsPaid->fetch_assoc();
+                                              $rcp_id = $rowPaid['pc_id'];
+                                              $selected_total_paid=$rowPaid['pc_amount'];
+
+                                              if($closing_ballance == 0){
+                                                $closing_ballance +=$selected_total_paid;
+                                                $cbDrOrCr = "DR";
+                                              }
+                                              else if($cbDrOrCr == "CR"){
+                                                if($closing_ballance > $selected_total_paid){
+                                                  $closing_ballance -=$selected_total_paid;
+                                                }
+                                                else {
+                                                  $closing_ballance =$selected_total_paid -$closing_ballance;
+                                                  $cbDrOrCr = "DR";
+                                                }
+                                              }
+                                              else {
+                                                $closing_ballance +=$selected_total_paid;
+                                                $cbDrOrCr = "DR";
+                                              }
+
+                                          ?>
+                                          <tr>
+                                            <td><?= $currentDate ?></td>
+                                            <td> Paid to <?= $fullName ?> Via #RPC 00<?= $rcp_id ?> </td>
+                                            <td> £<?= number_format($selected_total_paid,2) ?> </td>
+                                            <td></td>
+                                            <td>£<?= number_format($closing_ballance,2) ?> <?= $cbDrOrCr ?></td>
+                                          </tr>
+                                         <?php  }
+
                                           if($rsCreditSelected->num_rows > 0){
                                             while($rowCredit = $rsCreditSelected->fetch_assoc()){
                                               $selected_total_cred = $rowCredit['pi_amount'];
@@ -213,10 +249,15 @@ $closing_ballance=0;
                                             }
                                           }
 
+                                          ?>
 
+
+<?php
 
                                         }
                                          ?>
+
+
 
                                           </tbody>
                                        </table>
